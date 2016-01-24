@@ -1,0 +1,23 @@
+{
+  "name": "react-native-library",
+  "version": "1.0.0",
+  "description": "React Native Library for various components and modules",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/syaau/react-native-scheduled-notification.git"
+  },
+  "keywords": [
+    "react-native",
+    "library"
+  ],
+  "author": "Abhishek Maharjan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/syaau/react-native-scheduled-notification/issues"
+  },
+  "homepage": "https://github.com/syaau/react-native-scheduled-notification#readme"
+}
