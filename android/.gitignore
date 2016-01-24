@@ -1,0 +1,14 @@
+# This file is automatically changed by android studio
+# So, should not be added in git
+local.properties
+
+# Not sure what this folder does yet. keeping it out for
+# the moment
+gradle/
+
+
+# We don't want the Android Studio specific files in the git
+# Use build.gradle to import project
+*.iml
+.idea
+
