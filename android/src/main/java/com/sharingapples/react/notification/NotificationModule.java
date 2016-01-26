@@ -1,15 +1,21 @@
 package com.sharingapples.react.notification;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableMap;
 
 
 import java.util.HashMap;
@@ -37,26 +43,25 @@ public class NotificationModule extends ReactContextBaseJavaModule{
     }
 
     @ReactMethod
-    public void notify(String notificationTitle, String notificationMessage){
-        NotifyCall(getReactApplicationContext(),notificationTitle,notificationMessage);
+    public void notify(ReadableMap details){
+        Bundle bundle = Arguments.toBundle(details);
+        new NotificationHelper(getReactApplicationContext()).sendNotification(bundle);
     }
 
-    private void NotifyCall(ReactContext context,String notificationTitle, String notificationMessage){
 
-        Intent notificationIntent = new Intent(Intent.ACTION_VIEW);
-        notificationIntent.setData(Uri.parse("arrow://arrow"));
+    @ReactMethod
+    public void schedule(int time,ReadableMap details){
+        Bundle bundle = Arguments.toBundle(details);
+        Intent intent = new Intent(getReactApplicationContext(),MyBroadcastListener.class);
+        intent.putExtras(bundle);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getReactApplicationContext(), 12232, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getReactApplicationContext().getSystemService(getReactApplicationContext().ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+    }
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
-
-        Notification notification = new Notification.Builder(context)
-                .setSmallIcon(android.R.mipmap.sym_def_app_icon)
-                .setContentTitle(notificationTitle)
-                .setContentText(notificationMessage)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .build();
-
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0, notification);
+    @ReactMethod
+    public void scheduleAfter(int sec,ReadableMap details){
+        schedule((int) System.currentTimeMillis() + (sec * 1000),details);
+        Toast.makeText(getReactApplicationContext(), "Scheduling Notification after " + sec + "seconds", Toast.LENGTH_SHORT).show();
     }
 }
