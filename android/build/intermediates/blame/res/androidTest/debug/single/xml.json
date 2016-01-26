@@ -1,5 +1,9 @@
 [
     {
+        "merged": "/home/rpidanny/workspace/react-native/NotificationTest/node_modules/react-native-library/android/build/intermediates/res/merged/androidTest/debug/xml/preferences.xml",
+        "source": "/home/rpidanny/workspace/react-native/NotificationTest/node_modules/react-native-library/android/build/intermediates/exploded-aar/com.facebook.react/react-native/0.18.0/res/xml/preferences.xml"
+    },
+    {
         "merged": "/home/rpidanny/workspace/react-native/RNLibrary/node_modules/react-native-library/android/build/intermediates/res/merged/androidTest/debug/xml/preferences.xml",
         "source": "/home/rpidanny/workspace/react-native/RNLibrary/node_modules/react-native-library/android/build/intermediates/exploded-aar/com.facebook.react/react-native/0.16.1/res/xml/preferences.xml"
     }

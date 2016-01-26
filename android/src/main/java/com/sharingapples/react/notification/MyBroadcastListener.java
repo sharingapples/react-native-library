@@ -14,8 +14,9 @@ public class MyBroadcastListener extends BroadcastReceiver{
 
     @Override
     public void onReceive(Context context,Intent intent){
-
-        Bundle b= intent.getExtras();
-        new NotificationHelper(context).sendNotification(b);
+        if(intent.hasExtra("notification")){
+            Bundle b= intent.getBundleExtra("notification");
+            new NotificationHelper(context).sendNotification(b);
+        }
     }
 }

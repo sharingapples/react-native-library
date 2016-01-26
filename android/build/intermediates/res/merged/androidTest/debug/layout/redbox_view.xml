@@ -19,4 +19,3 @@
     android:text="@string/catalyst_reloadjs"
     />
 </LinearLayout>
-<!-- From: file:/Users/mkonicek/code/react-native/ReactAndroid/src/main/res/devsupport/layout/redbox_view.xml -->

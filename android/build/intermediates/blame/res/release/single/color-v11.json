@@ -1,10 +1,18 @@
 [
     {
+        "merged": "/home/rpidanny/workspace/react-native/NotificationTest/node_modules/react-native-library/android/build/intermediates/res/merged/release/color-v11/abc_background_cache_hint_selector_material_dark.xml",
+        "source": "/home/rpidanny/workspace/react-native/NotificationTest/node_modules/react-native-library/android/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/color-v11/abc_background_cache_hint_selector_material_dark.xml"
+    },
+    {
         "merged": "/home/rpidanny/workspace/react-native/RNLibrary/node_modules/react-native-library/android/build/intermediates/res/merged/release/color-v11/abc_background_cache_hint_selector_material_dark.xml",
         "source": "/home/rpidanny/workspace/react-native/RNLibrary/node_modules/react-native-library/android/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/color-v11/abc_background_cache_hint_selector_material_dark.xml"
     },
     {
         "merged": "/home/rpidanny/workspace/react-native/RNLibrary/node_modules/react-native-library/android/build/intermediates/res/merged/release/color-v11/abc_background_cache_hint_selector_material_light.xml",
         "source": "/home/rpidanny/workspace/react-native/RNLibrary/node_modules/react-native-library/android/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/color-v11/abc_background_cache_hint_selector_material_light.xml"
+    },
+    {
+        "merged": "/home/rpidanny/workspace/react-native/NotificationTest/node_modules/react-native-library/android/build/intermediates/res/merged/release/color-v11/abc_background_cache_hint_selector_material_light.xml",
+        "source": "/home/rpidanny/workspace/react-native/NotificationTest/node_modules/react-native-library/android/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/color-v11/abc_background_cache_hint_selector_material_light.xml"
     }
 ]

@@ -50,18 +50,18 @@ public class NotificationModule extends ReactContextBaseJavaModule{
 
 
     @ReactMethod
-    public void schedule(int time,ReadableMap details){
+    public void schedule(double time,ReadableMap details){
         Bundle bundle = Arguments.toBundle(details);
         Intent intent = new Intent(getReactApplicationContext(),MyBroadcastListener.class);
-        intent.putExtras(bundle);
+        intent.putExtra("notification",bundle);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getReactApplicationContext(), 12232, intent, 0);
         AlarmManager alarmManager = (AlarmManager) getReactApplicationContext().getSystemService(getReactApplicationContext().ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, (long)time, pendingIntent);
     }
 
     @ReactMethod
     public void scheduleAfter(int sec,ReadableMap details){
-        schedule((int) System.currentTimeMillis() + (sec * 1000),details);
+        schedule(System.currentTimeMillis() + (sec * 1000),details);
         Toast.makeText(getReactApplicationContext(), "Scheduling Notification after " + sec + "seconds", Toast.LENGTH_SHORT).show();
     }
 }
