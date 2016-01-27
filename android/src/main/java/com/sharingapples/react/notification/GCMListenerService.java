@@ -12,6 +12,9 @@ public class GCMListenerService extends GcmListenerService {
 
     @Override
     public void onMessageReceived(String from,Bundle bundle){
-        new NotificationHelper(this).sendNotification(bundle);
+        Bundle b = new Bundle();
+        b.putString("title","GCM Message");
+        b.putString("message","Message Received");
+        new NotificationHelper(this).sendNotification(b);
     }
 }
