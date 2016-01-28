@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 /**
  * Created by rpidanny on 1/26/16.
@@ -16,6 +17,7 @@ import android.support.v4.app.NotificationCompat;
 public class NotificationHelper {
 
     private Context mContext;
+    private static final String TAG = "NotificationHelper";
 
     public NotificationHelper(Context context){
         mContext = context;
@@ -45,6 +47,9 @@ public class NotificationHelper {
             notificationID = Integer.parseInt(notificationIDString);
         }else{
             notificationID = (int) System.currentTimeMillis();
+        }
+        if(bundle.getString("group")!=null){
+            notification.setGroup(bundle.getString("group"));
         }
         Notification info = notification.build();
         info.defaults |= Notification.DEFAULT_VIBRATE;
