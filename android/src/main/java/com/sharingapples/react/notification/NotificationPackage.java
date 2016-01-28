@@ -13,13 +13,16 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NotificationPackage implements ReactPackage{
-
+    Activity mActivity;
+    public NotificationPackage(Activity activity){
+        mActivity = activity;
+    }
 
     @Override
     public List<NativeModule> createNativeModules(
             ReactApplicationContext reactContext){
         List<NativeModule> modules = new ArrayList<>();
-        modules.add(new NotificationModule(reactContext));
+        modules.add(new NotificationModule(reactContext,mActivity));
         return modules;
     }
 

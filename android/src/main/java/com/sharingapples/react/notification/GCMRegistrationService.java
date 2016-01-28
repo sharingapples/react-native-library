@@ -2,12 +2,13 @@ package com.sharingapples.react.notification;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.util.Log;
 
+import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
+
+import java.io.IOException;
 
 /**
  * Created by rpidanny on 1/26/16.
@@ -23,45 +24,33 @@ public class GCMRegistrationService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent){
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String SenderID = intent.getStringExtra("senderID");
-        if (SenderID == null) {
-            //Toast.makeText(getApplicationContext(),"No sender ID",Toast.LENGTH_SHORT).show();
-            Bundle b = new Bundle();
-            b.putString("title","Error");
-            b.putString("message", "No Sender ID");
-            new NotificationHelper(getApplicationContext()).sendNotification(b);
+        String senderID = intent.getStringExtra("senderID");
+        if (senderID == null) {
+            Log.i(TAG, "No Sender ID");
             return;
         }
         try{
             InstanceID instanceID = InstanceID.getInstance(getApplicationContext());
-            String token = instanceID.getToken(SenderID, GoogleCloudMessaging.INSTANCE_ID_SCOPE,null);
-
-            sendTokenToServer(token);
+            String token = instanceID.getToken(senderID, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+            Log.i(TAG, "GCM Registration Token: " + token);
+            subscribeTopics(token);
             sendRegistrationToken(token);
-
-            sharedPreferences.edit().putBoolean(GCMPreferences.SENT_TOKEN_TO_SERVER,true).apply();
         }catch (Exception e){
-            Bundle b = new Bundle();
-            b.putString("title","Error");
-            b.putString("message", "Error Getting Instance ID");
-            new NotificationHelper(getApplicationContext()).sendNotification(b);
-
-            sharedPreferences.edit().putBoolean(GCMPreferences.SENT_TOKEN_TO_SERVER,false).apply();
+            Log.i(TAG,"Error Getting Instance ID");
             e.printStackTrace();
         }
     }
 
     private void sendRegistrationToken(String token){
-        Intent intent = new Intent(GCMPreferences.REGISTRATION_COMPLETE);
+        Intent intent = new Intent("PushNotificationRegisteredToken");
         intent.putExtra("token",token);
         sendBroadcast(intent);
     }
 
-    private void sendTokenToServer(String token){
-        Bundle b = new Bundle();
-        b.putString("title","GCM Token");
-        b.putString("message",token);
-        new NotificationHelper(getApplicationContext()).sendNotification(b);
+    private void subscribeTopics(String token) throws IOException {
+        GcmPubSub pubSub = GcmPubSub.getInstance(this);
+        for (String topic : TOPICS) {
+            pubSub.subscribe(token, "/topics/" + topic, null);
+        }
     }
 }
