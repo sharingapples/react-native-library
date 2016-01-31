@@ -1,5 +1,5 @@
 'use strict';
 
-var NotificationAndroid = require( './component/index.android.js' );
+var NotificationComponent = require( './component/index.android.js' );
 
-module.exports = NotificationAndroid;
+module.exports = NotificationComponent.component;
