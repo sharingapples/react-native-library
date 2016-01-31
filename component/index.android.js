@@ -19,8 +19,8 @@ NotificationComponent.prototype.notify = function(details: Object){
 	NotificationAndroid.notify(details);
 };
 
-NotificationComponent.prototype.schedule = function(){
-
+NotificationComponent.prototype.schedule = function(details: Object){
+	NotificationAndroid.schedule(details);
 };
 
 

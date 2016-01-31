@@ -30,6 +30,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 /**
  * Created by rpidanny on 1/25/16.
@@ -137,21 +138,22 @@ public class NotificationModule extends ReactContextBaseJavaModule{
 
 
     @ReactMethod
-    public void schedule(double time,ReadableMap details){
+    public void schedule(ReadableMap details){
         Bundle bundle = Arguments.toBundle(details);
+        double time = bundle.getDouble("time");
         Intent intent = new Intent(mContext,MyBroadcastListener.class);
-        intent.putExtra("notification",bundle);
+        intent.putExtra("notification", bundle.getBundle("notification"));
         PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, 12232, intent, 0);
         AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(mContext.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, (long) time, pendingIntent);
     }
-
+/*
     @ReactMethod
     public void scheduleAfter(int sec,ReadableMap details){
         schedule(System.currentTimeMillis() + (sec * 1000),details);
         Toast.makeText(mContext, "Scheduling Notification after " + sec + "seconds", Toast.LENGTH_SHORT).show();
     }
-
+*/
     @ReactMethod
     public void register(String senderID){
         if (checkPlayServices()){
