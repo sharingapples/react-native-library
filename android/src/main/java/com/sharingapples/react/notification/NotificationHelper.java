@@ -13,6 +13,7 @@ import android.util.Log;
 
 /**
  * Created by rpidanny on 1/26/16.
+ * helper class for sending local notifications
  */
 public class NotificationHelper {
 

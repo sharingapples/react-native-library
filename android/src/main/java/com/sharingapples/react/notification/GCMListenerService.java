@@ -23,6 +23,8 @@ public class GCMListenerService extends GcmListenerService {
         Log.w(TAG, "Title: " + bundle.getString("title"));
         Log.w(TAG, "Message: " + bundle.getString("message"));
         Log.w(TAG, "Text: " + bundle.getString("text"));
+
+        //sending intent if application is open rather than sending notification
         if(isApplicationRunning()){
             Intent intent = new Intent("PushNotificationReceived");
             bundle.putBoolean("foreground",true);
@@ -30,9 +32,13 @@ public class GCMListenerService extends GcmListenerService {
             sendBroadcast(intent);
             return;
         }
+
+        //else send notification
         new NotificationHelper(this).sendNotification(bundle);
     }
 
+
+    //check if application is open 
     private boolean isApplicationRunning() {
         ActivityManager activityManager = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> processInfos = activityManager.getRunningAppProcesses();

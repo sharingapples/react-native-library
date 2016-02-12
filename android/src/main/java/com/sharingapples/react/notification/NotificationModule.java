@@ -61,6 +61,7 @@ public class NotificationModule extends ReactContextBaseJavaModule{
         return constants;
     }
 
+    //check if playservices is installed as GCM requires playservices
     private boolean checkPlayServices() {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
         int resultCode = apiAvailability.isGooglePlayServicesAvailable(mContext);
@@ -77,6 +78,8 @@ public class NotificationModule extends ReactContextBaseJavaModule{
         return true;
     }
 
+
+    //method to send events to javascript layer
     public void sendEvent(String eventName, Object params){
         mContext
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
@@ -84,6 +87,7 @@ public class NotificationModule extends ReactContextBaseJavaModule{
 
     }
 
+    //sends received token received from GCM to javascript layer
     public void registerTokenReceived(){
         IntentFilter intentFilter = new IntentFilter("PushNotificationRegisteredToken");
 
@@ -99,6 +103,7 @@ public class NotificationModule extends ReactContextBaseJavaModule{
         }, intentFilter);
     }
 
+    //registers notification receiver for getting notification on javascript layer when application is open
     public void registerNotificationReceived(){
         IntentFilter intentFilter = new IntentFilter("PushNotificationReceived");
 
@@ -130,13 +135,14 @@ public class NotificationModule extends ReactContextBaseJavaModule{
         return json.toString();
     }
 
+    //send local notfication
     @ReactMethod
     public void notify(ReadableMap details){
         Bundle bundle = Arguments.toBundle(details);
         new NotificationHelper(mContext).sendNotification(bundle);
     }
 
-
+    //schedule local notification
     @ReactMethod
     public void schedule(ReadableMap details){
         Bundle bundle = Arguments.toBundle(details);
@@ -147,13 +153,17 @@ public class NotificationModule extends ReactContextBaseJavaModule{
         AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(mContext.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, (long) time, pendingIntent);
     }
+
+    //schedule notfication after depricated
 /*
     @ReactMethod
     public void scheduleAfter(int sec,ReadableMap details){
         schedule(System.currentTimeMillis() + (sec * 1000),details);
         Toast.makeText(mContext, "Scheduling Notification after " + sec + "seconds", Toast.LENGTH_SHORT).show();
     }
-*/
+*/  
+
+    //register app to GCM to obtain notification token
     @ReactMethod
     public void register(String senderID){
         if (checkPlayServices()){

@@ -41,12 +41,15 @@ public class GCMRegistrationService extends IntentService {
         }
     }
 
+    //send intent with obtained token 
     private void sendRegistrationToken(String token){
         Intent intent = new Intent("PushNotificationRegisteredToken");
         intent.putExtra("token",token);
         sendBroadcast(intent);
     }
 
+
+    //subscribe to topics for group messaging
     private void subscribeTopics(String token) throws IOException {
         GcmPubSub pubSub = GcmPubSub.getInstance(this);
         for (String topic : TOPICS) {
